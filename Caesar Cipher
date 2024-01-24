@@ -1,0 +1,169 @@
+#Auther:Darcy Ma
+#Stdudent ID:473051772
+#Version:manytimes
+#18/05/2023 bug fix for invaild decrytion input digit not accepted 
+
+#import objest:sting,math
+import string
+import math
+#Create function to meet the criteria
+#Define convert_to_Caesar use the same argument
+
+#Asinged value to whitespace,fullstop,specail charactor,lowecase to upper
+def convert_to_Caesar(text, method):
+    text = convert_whitespace(text, method)
+    text = convert_fullstop(text, method)
+    text = convert_special(text, method)
+    text = convert_digits(text, method)
+    text = convert_lowercase(text, method)
+    
+    return text
+
+
+#set up condition for function(whitespace)
+#create empty list and set up condition that allow input sting join without whitespace
+def convert_whitespace(text, method):
+    convert_text = []
+    for letter in text:
+        if not letter.isspace():
+            convert_text.append(letter)
+        if method == "D" and letter.isspace():
+            print("Cannot accepts space")
+            quit_interface()
+    return "".join(convert_text)
+  
+#Set up condition for full stop to be replaced by "UOU" function
+#Argument(text) use object(replace) 
+def convert_fullstop(text, method):
+    convert_text = []
+    for letter in text:
+      if method == "D" and letter in string.punctuation:
+            print("Cannot accepts special characters")
+            quit_interface()
+    else:
+      convert_text = text.replace(".", "UOU")
+    return "".join(convert_text)
+
+
+#Set up condition for specail charactor 
+#the function only accept the input string without specail charactor that allow to join the string
+def convert_special(text, method):
+    convert_text = []
+  
+    for letter in text:
+        if method == "D" and letter in string.punctuation:
+            print("Cannot accepts special characters")
+            quit_interface()          
+        if letter not in string.punctuation:
+            convert_text.append(letter)
+    return "".join(convert_text)
+
+
+#Set up condition for the function that digit will be convert to ACSII list to uppercase then join the list
+
+def convert_digits(text, method):
+    convert_text = []
+    wordsOfNumber = ["ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE","SIX","SEVEN","EIGHT","NINE"]
+    for letter in text:
+      
+        if method == "D" and letter.isdigit():
+            print("Cannot accepts number")
+            quit_interface()
+          
+        if letter.isdigit():
+            convert_text.append(wordsOfNumber[int(letter)])
+        else:
+          convert_text.append(letter)
+          
+    return "".join(convert_text)
+
+
+#To covert lowercase to uppercase
+def convert_lowercase(text, method):
+    convert_text = []
+    for letter in text:
+        if method == "D" and letter.islower():
+            print("Cannot accepts lower case")
+            quit_interface()
+          
+        if letter.islower():
+            convert_text.append(letter.upper())
+        else:
+          convert_text.append(letter)
+          
+    return "".join(convert_text)
+
+
+#create function that allow include shifting
+def encrypt_Caesar(shift, converted_text):
+    encrypted_text=[]
+    for letter in converted_text:
+        if letter.isupper():
+            encrypted_text.append(chr((ord(letter) - 65 + shift ) % 26 + 65)) 
+        elif letter.islower():
+            encrypted_text.append(chr((ord(letter)- 97 + shift) % 26 + 97))
+            
+    return "".join(encrypted_text)
+
+def decrypt_Caesar(shift, encrypted_text):
+  decrypted_text=[]
+  for letter in encrypted_text:
+    if letter.isupper():
+      decrypted_text.append(chr((ord(letter) - 65 - shift) % 26 + 65))
+    elif letter.islower():
+      decrypted_text.append(chr((ord(letter) - 97 - shift) % 26 + 97))
+      
+  return "".join(decrypted_text) 
+  
+#strat program for encryption
+def startCypher():
+    while True:
+        user_choice = input("Would you like to encrypt (E) or decrypt (D) a message? ")
+        if user_choice.upper() == "E":
+            text = input("Enter the message to encrypt: ")
+            converted_text = convert_to_Caesar(text, "E")
+            #print("Converted text:", converted_text)
+            shift = input("Enter the shift value: ")
+            if not shift.isdigit():
+              print("Error")
+            else:
+              shift = math.ceil(float(shift))
+              encrypted_text = encrypt_Caesar(shift, converted_text)
+              print("Encrypted message:", encrypted_text)
+              quit_interface()
+            
+        elif user_choice.upper() == "D":
+            text = input("Enter the message to decrypt: ")
+            #print("Before to convert caesar", text)
+            text = convert_to_Caesar(text, "D")
+            shift = input("Enter the shift value: ")
+            if shift.isdigit():
+                shift = math.ceil(float(shift))
+            else:
+                print("Error.Please enter a valid message.")
+                quit_interface()  
+            decrypted_text = decrypt_Caesar(shift, text)
+            decrypted_text = decrypted_text.replace("UOU", ".")
+            print("Decrypted message:", decrypted_text)
+            # else:
+            #   print("Error.Please enter a valid message.")
+            #   quit_interface()            
+     
+        else:
+            print("Invalid choice. Please try again.")
+            quit_interface()   
+        
+#Set up a function for usert to choose to quiet the program
+def quit_interface():
+    text=input("Would you like to continue(Yes:Y, NO:N): ")
+    if text.upper() == "N":
+        print("See you next time!")
+        quit()
+    elif text.upper() == "Y":
+        startCypher()
+    else:
+        print("Invalid input")
+        quit_interface()
+    
+                       
+startCypher()
