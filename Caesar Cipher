@@ -1,15 +1,14 @@
 #Auther:Darcy Ma
-#Stdudent ID:473051772
-#Version:manytimes
-#18/05/2023 bug fix for invaild decrytion input digit not accepted 
+#Version:many times
+#18/05/2023 bug fix for invalid decryption input digit not accepted 
 
-#import objest:sting,math
+#import object: sting,math
 import string
 import math
-#Create function to meet the criteria
-#Define convert_to_Caesar use the same argument
+#Create a function to meet the criteria
+#Define convert_to_Caesar and use the same argument
 
-#Asinged value to whitespace,fullstop,specail charactor,lowecase to upper
+#Asinged value to whitespace,fullstop, special characters, lowercase to upper
 def convert_to_Caesar(text, method):
     text = convert_whitespace(text, method)
     text = convert_fullstop(text, method)
@@ -21,7 +20,7 @@ def convert_to_Caesar(text, method):
 
 
 #set up condition for function(whitespace)
-#create empty list and set up condition that allow input sting join without whitespace
+#create an empty list and set up a condition that allows input sting join without whitespace
 def convert_whitespace(text, method):
     convert_text = []
     for letter in text:
@@ -45,8 +44,8 @@ def convert_fullstop(text, method):
     return "".join(convert_text)
 
 
-#Set up condition for specail charactor 
-#the function only accept the input string without specail charactor that allow to join the string
+#Set up conditions for special character 
+#the function only accepts the input string without a special character that allows it to join the string
 def convert_special(text, method):
     convert_text = []
   
@@ -59,7 +58,7 @@ def convert_special(text, method):
     return "".join(convert_text)
 
 
-#Set up condition for the function that digit will be convert to ACSII list to uppercase then join the list
+#Set up a condition for the function that the digit will be converted to ASCII list to uppercase then join the list
 
 def convert_digits(text, method):
     convert_text = []
@@ -78,7 +77,7 @@ def convert_digits(text, method):
     return "".join(convert_text)
 
 
-#To covert lowercase to uppercase
+#To convert lowercase to uppercase
 def convert_lowercase(text, method):
     convert_text = []
     for letter in text:
@@ -94,7 +93,7 @@ def convert_lowercase(text, method):
     return "".join(convert_text)
 
 
-#create function that allow include shifting
+#create a function that include shifting
 def encrypt_Caesar(shift, converted_text):
     encrypted_text=[]
     for letter in converted_text:
@@ -153,7 +152,7 @@ def startCypher():
             print("Invalid choice. Please try again.")
             quit_interface()   
         
-#Set up a function for usert to choose to quiet the program
+#Set up a function for users to choose to quit the program
 def quit_interface():
     text=input("Would you like to continue(Yes:Y, NO:N): ")
     if text.upper() == "N":
